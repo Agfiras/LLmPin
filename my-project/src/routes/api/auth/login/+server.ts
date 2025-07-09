@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { connectToDatabase } from '$lib/db.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { env } from '$env/dynamic/private';
+import { JWT_SECRET } from '$env/static/private';
 import type { RequestEvent } from '@sveltejs/kit';
 
 export const POST = async ({ request }: RequestEvent) => {
@@ -29,14 +29,13 @@ export const POST = async ({ request }: RequestEvent) => {
 		}
 
 		// Generate JWT token
-		const jwtSecret = env.JWT_SECRET || 'fallback-secret';
 		const token = jwt.sign(
 			{ 
-				id: user._id.toString(), 
+				userId: user._id.toString(), 
 				username: user.username, 
 				email: user.email 
 			},
-			jwtSecret,
+			JWT_SECRET,
 			{ expiresIn: '7d' }
 		);
 

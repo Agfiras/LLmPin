@@ -1,40 +1,16 @@
 import { json } from '@sveltejs/kit';
 import { connectToDatabase } from '$lib/db.js';
-import jwt from 'jsonwebtoken';
-import { env } from '$env/dynamic/private';
+import { requireAuth } from '$lib/auth.js';
 import { ObjectId } from 'mongodb';
 import type { RequestEvent } from '@sveltejs/kit';
 
-// Helper function to verify JWT token
-function verifyToken(authHeader: string | null): any {
-	if (!authHeader || !authHeader.startsWith('Bearer ')) {
-		return null;
-	}
-	
-	const token = authHeader.substring(7);
-	const jwtSecret = env.JWT_SECRET || 'fallback-secret';
-	
+export const POST = async (event: RequestEvent) => {
 	try {
-		return jwt.verify(token, jwtSecret);
-	} catch {
-		return null;
-	}
-}
-
-export const POST = async ({ request, params }: RequestEvent) => {
-	try {
-		const authHeader = request.headers.get('Authorization');
-		console.log('Received auth header:', authHeader);
-		
-		const user = verifyToken(authHeader);
+		// Use the middleware to get authenticated user
+		const user = requireAuth(event);
 		console.log('Verified user:', user);
 
-		if (!user) {
-			console.log('Authorization failed - no user found');
-			return json({ error: 'Unauthorized' }, { status: 401 });
-		}
-
-		const promptId = params.id;
+		const promptId = event.params.id;
 		if (!promptId) {
 			return json({ error: 'Prompt ID required' }, { status: 400 });
 		}

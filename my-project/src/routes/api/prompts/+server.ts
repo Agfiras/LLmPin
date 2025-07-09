@@ -1,25 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { connectToDatabase } from '$lib/db.js';
-import jwt from 'jsonwebtoken';
-import { env } from '$env/dynamic/private';
+import { requireAuth } from '$lib/auth.js';
 import { ObjectId } from 'mongodb';
 import type { RequestEvent } from '@sveltejs/kit';
-
-// Helper function to verify JWT token
-function verifyToken(authHeader: string | null): any {
-	if (!authHeader || !authHeader.startsWith('Bearer ')) {
-		return null;
-	}
-	
-	const token = authHeader.substring(7);
-	const jwtSecret = env.JWT_SECRET || 'fallback-secret';
-	
-	try {
-		return jwt.verify(token, jwtSecret);
-	} catch {
-		return null;
-	}
-}
 
 export const GET = async ({ url }: RequestEvent) => {
 	try {
@@ -70,16 +53,12 @@ export const GET = async ({ url }: RequestEvent) => {
 	}
 };
 
-export const POST = async ({ request }: RequestEvent) => {
+export const POST = async (event: RequestEvent) => {
 	try {
-		const authHeader = request.headers.get('Authorization');
-		const user = verifyToken(authHeader);
+		// Use the middleware to get authenticated user
+		const user = requireAuth(event);
 
-		if (!user) {
-			return json({ error: 'Unauthorized' }, { status: 401 });
-		}
-
-		const { title, prompt, category, tags } = await request.json();
+		const { title, prompt, category, tags } = await event.request.json();
 
 		if (!title || !prompt || !category) {
 			return json({ error: 'Missing required fields' }, { status: 400 });
