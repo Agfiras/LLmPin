@@ -32,13 +32,13 @@
 	<title>Login - PromptPin</title>
 </svelte:head>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
 	<div class="max-w-md w-full space-y-8">
 		<div>
-			<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+			<h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
 				Sign in to your account
 			</h2>
-			<p class="mt-2 text-center text-sm text-gray-600">
+			<p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
 				Or
 				<a href="/signup" class="font-medium text-red-600 hover:text-red-500">
 					create a new account
@@ -49,7 +49,7 @@
 		<form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
 			<div class="rounded-md shadow-sm space-y-4">
 				<div>
-					<label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+					<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
 						Email address
 					</label>
 					<input
@@ -57,12 +57,12 @@
 						bind:value={email}
 						type="email"
 						required
-						class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+						class="appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
 						placeholder="Enter your email"
 					/>
 				</div>
 				<div>
-					<label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+					<label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
 						Password
 					</label>
 					<input
@@ -70,14 +70,14 @@
 						bind:value={password}
 						type="password"
 						required
-						class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
+						class="appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
 						placeholder="Enter your password"
 					/>
 				</div>
 			</div>
 			
 			{#if error}
-				<div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+				<div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
 					{error}
 				</div>
 			{/if}

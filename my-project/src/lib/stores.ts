@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
-import type { User, Prompt, AuthState } from './types';
+import type { User, Prompt, AuthState, ThemeState } from './types';
 
 // API Helper functions
 const api = {
@@ -229,6 +229,75 @@ export const prompts = createPromptsStore();
 export const currentUser = derived(auth, $auth => $auth.user);
 export const isAuthenticated = derived(auth, $auth => $auth.isAuthenticated);
 export const authToken = derived(auth, $auth => $auth.token);
+
+// Theme store for dark mode
+function createThemeStore() {
+	const defaultTheme: ThemeState = { isDark: false };
+	const { subscribe, set, update } = writable<ThemeState>(defaultTheme);
+
+	// Load theme from localStorage on initialization
+	if (browser) {
+		const stored = localStorage.getItem('theme');
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored);
+				set(parsed);
+				// Apply theme to document
+				if (parsed.isDark) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+			} catch (e) {
+				console.error('Failed to parse stored theme:', e);
+			}
+		} else {
+			// Check system preference
+			const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			const systemTheme = { isDark: prefersDark };
+			set(systemTheme);
+			if (prefersDark) {
+				document.documentElement.classList.add('dark');
+			}
+			localStorage.setItem('theme', JSON.stringify(systemTheme));
+		}
+	}
+
+	return {
+		subscribe,
+		toggle: () => {
+			update(theme => {
+				const newTheme = { ...theme, isDark: !theme.isDark };
+				if (browser) {
+					// Apply theme to document
+					if (newTheme.isDark) {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+					// Save to localStorage
+					localStorage.setItem('theme', JSON.stringify(newTheme));
+				}
+				return newTheme;
+			});
+		},
+		setDark: (isDark: boolean) => {
+			const newTheme = { isDark };
+			set(newTheme);
+			if (browser) {
+				if (isDark) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+				localStorage.setItem('theme', JSON.stringify(newTheme));
+			}
+		}
+	};
+}
+
+export const theme = createThemeStore();
+export const isDark = derived(theme, $theme => $theme.isDark);
 
 // Search store
 export const searchQuery = writable('');

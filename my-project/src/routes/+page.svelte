@@ -82,23 +82,12 @@
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-	<!-- Debug Info
-	{#if $currentUser}
-		<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-			<strong>Debug:</strong> Logged in as {$currentUser.username} | Token: {$authToken ? 'Present' : 'Missing'}
-		</div>
-	{:else}
-		<div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
-			<strong>Debug:</strong> Not logged in. Please <a href="/login" class="underline">log in</a> to like prompts.
-		</div>
-	{/if} -->
-
 	<!-- Hero Section -->
 	<div class="text-center mb-12">
-		<h1 class="text-4xl font-bold text-gray-900 mb-4">
-			Discover & Share Amazing AI Prompts
-		</h1>
-		<p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        <h1 class="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+            Discover & Share Amazing AI Prompts
+        </h1>
+		<p class="text-xl text-gray-600 dark:text-white-300 max-w-2xl mx-auto">
 			Find the perfect prompts for your AI conversations. Save favorites, explore categories, and share your creations with the community.
 		</p>
 	</div>
@@ -112,7 +101,7 @@
 					bind:value={$searchQuery}
 					type="text"
 					placeholder="Search prompts, tags, or content..."
-					class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+					class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
 				/>
 			</div>
 			
@@ -123,7 +112,7 @@
 						class="px-4 py-2 rounded-full text-sm font-medium transition-colors {
 							selectedCategory === category
 								? 'bg-red-500 text-white'
-								: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+								: 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
 						}"
 						on:click={() => selectedCategory = category}
 					>
@@ -141,7 +130,7 @@
 		</div>
 	{:else if error}
 		<div class="text-center py-12">
-			<p class="text-red-500 text-lg">{error}</p>
+			<p class="text-red-500 dark:text-red-400 text-lg">{error}</p>
 			<button 
 				on:click={loadPrompts}
 				class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
@@ -155,16 +144,16 @@
 			<div
 				role="button"
 				tabindex="0"
-				class="w-full text-left bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+				class="w-full text-left bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow cursor-pointer"
 				on:click={() => goto(`/prompt/${prompt.id}`)}
 				on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') goto(`/prompt/${prompt.id}`); }}
 			>
 				<!-- Header -->
 				<div class="flex justify-between items-start mb-4">
 					<div class="flex-1">
-						<h3 class="text-lg font-semibold text-gray-900 mb-2">{prompt.title}</h3>
-						<div class="flex items-center text-sm text-gray-500 mb-2">
-							<span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
+						<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{prompt.title}</h3>
+						<div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+							<span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded-full text-xs font-medium">
 								{prompt.category}
 							</span>
 						</div>
@@ -172,7 +161,7 @@
 				</div>
 
 				<!-- Content Preview -->
-				<p class="text-gray-600 text-sm mb-4 line-clamp-4">
+				<p class="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-4">
 					{prompt.prompt.length > 150 
 						? prompt.prompt.substring(0, 150) + '...' 
 						: prompt.prompt}
@@ -181,7 +170,7 @@
 				<!-- Tags -->
 				<div class="flex flex-wrap gap-1 mb-4">
 					{#each prompt.tags as tag}
-						<span class="inline-flex items-center text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+						<span class="inline-flex items-center text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">
 							<Tag class="w-3 h-3 mr-1" />
 							{tag}
 						</span>
@@ -189,8 +178,8 @@
 				</div>
 
 				<!-- Footer -->
-				<div class="flex items-center justify-between pt-4 border-t border-gray-100">
-					<div class="flex items-center space-x-2 text-sm text-gray-500">
+				<div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+					<div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
 						<Calendar class="w-4 h-4" />
 						<span>{formatDate(prompt.createdAt)}</span>
 					</div>
@@ -201,7 +190,7 @@
 								e.stopPropagation();
 								copyPrompt(prompt.prompt);
 							}}
-							class="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+							class="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
 							title="Copy prompt"
 						>
 							<Copy class="w-4 h-4" />
@@ -215,7 +204,7 @@
 							class="flex items-center space-x-1 p-2 rounded-lg transition-colors {
 								$currentUser && prompt.likedBy.includes($currentUser.id)
 									? 'text-red-500 hover:text-red-600'
-									: 'text-gray-400 hover:text-red-500'
+									: 'text-gray-400 dark:text-gray-500 hover:text-red-500'
 							}"
 							title={$currentUser && prompt.likedBy.includes($currentUser.id) ? 'Unlike' : 'Like'}
 						>
@@ -226,11 +215,11 @@
 				</div>
 
 				<!-- Author -->
-				<div class="flex items-center mt-4 pt-3 border-t border-gray-100">
+				<div class="flex items-center mt-4 pt-3 border-t border-gray-100 dark:border-gray-700">
 					<div class="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-medium mr-2">
 						{prompt.author.charAt(0)}
 					</div>
-					<span class="text-sm text-gray-600">by {prompt.author}</span>
+					<span class="text-sm text-gray-600 dark:text-gray-300">by {prompt.author}</span>
 				</div>
 			</div>			{/each}
 		</div>
@@ -238,8 +227,8 @@
 
 	{#if !loading && !error && displayPrompts.length === 0}
 		<div class="text-center py-12">
-			<p class="text-gray-500 text-lg">No prompts found matching your criteria.</p>
-			<p class="text-gray-400 mt-2">Try adjusting your search or category filter.</p>
+			<p class="text-gray-500 dark:text-gray-400 text-lg">No prompts found matching your criteria.</p>
+			<p class="text-gray-400 dark:text-gray-500 mt-2">Try adjusting your search or category filter.</p>
 		</div>
 	{/if}
 </div>

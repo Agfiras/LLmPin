@@ -64,15 +64,15 @@
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 	<div class="mb-8">
-		<h1 class="text-3xl font-bold text-gray-900 mb-2">Create New Prompt</h1>
-		<p class="text-gray-600">Share your amazing AI prompts with the community</p>
+		<h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Create New Prompt</h1>
+		<p class="text-gray-600 dark:text-gray-300">Share your amazing AI prompts with the community</p>
 	</div>
 
-	<div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+	<div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
 		<form on:submit|preventDefault={handleSubmit} class="space-y-6">
 			<!-- Title -->
 			<div>
-				<label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+				<label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 					Title *
 				</label>
 				<input
@@ -80,20 +80,20 @@
 					bind:value={title}
 					type="text"
 					required
-					class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+					class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
 					placeholder="Give your prompt a descriptive title"
 				/>
 			</div>
 
 			<!-- Category -->
 			<div>
-				<label for="category" class="block text-sm font-medium text-gray-700 mb-2">
+				<label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 					Category
 				</label>
 				<select
 					id="category"
 					bind:value={category}
-					class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+					class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
 				>
 					{#each categories as cat}
 						<option value={cat}>{cat}</option>
@@ -103,7 +103,7 @@
 
 			<!-- Prompt Content -->
 			<div>
-				<label for="prompt" class="block text-sm font-medium text-gray-700 mb-2">
+				<label for="prompt" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 					Prompt Content *
 				</label>
 				<textarea
@@ -111,33 +111,33 @@
 					bind:value={prompt}
 					required
 					rows="8"
-					class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none"
+					class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
 					placeholder="Write your AI prompt here. Be specific and clear about what you want the AI to do..."
 				></textarea>
-				<p class="text-sm text-gray-500 mt-1">
+				<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
 					Tip: Include clear instructions, context, and examples for best results
 				</p>
 			</div>
 
 			<!-- Tags -->
 			<div>
-				<label for="tags" class="block text-sm font-medium text-gray-700 mb-2">
+				<label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
 					Tags
 				</label>
 				<input
 					id="tags"
 					bind:value={tags}
 					type="text"
-					class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+					class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
 					placeholder="Separate tags with commas (e.g., creative writing, storytelling, fiction)"
 				/>
-				<p class="text-sm text-gray-500 mt-1">
+				<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
 					Add relevant tags to help others discover your prompt
 				</p>
 			</div>
 
 			{#if error}
-				<div class="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md">
+				<div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
 					{error}
 				</div>
 			{/if}
