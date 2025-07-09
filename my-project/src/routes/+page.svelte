@@ -144,16 +144,16 @@
 			<div
 				role="button"
 				tabindex="0"
-				class="w-full text-left bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow cursor-pointer"
+				class="w-full text-left bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-xl hover:-translate-y-2 hover:scale-105 transition-all duration-300 ease-out cursor-pointer group"
 				on:click={() => goto(`/prompt/${prompt.id}`)}
 				on:keydown={(e) => { if (e.key === 'Enter' || e.key === ' ') goto(`/prompt/${prompt.id}`); }}
 			>
 				<!-- Header -->
 				<div class="flex justify-between items-start mb-4">
 					<div class="flex-1">
-						<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{prompt.title}</h3>
+						<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">{prompt.title}</h3>
 						<div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
-							<span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded-full text-xs font-medium">
+							<span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded-full text-xs font-medium group-hover:bg-red-200 dark:group-hover:bg-red-800 transition-colors duration-300">
 								{prompt.category}
 							</span>
 						</div>
@@ -170,7 +170,7 @@
 				<!-- Tags -->
 				<div class="flex flex-wrap gap-1 mb-4">
 					{#each prompt.tags as tag}
-						<span class="inline-flex items-center text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">
+						<span class="inline-flex items-center text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded group-hover:bg-gray-200 dark:group-hover:bg-gray-600 transition-colors duration-300">
 							<Tag class="w-3 h-3 mr-1" />
 							{tag}
 						</span>
@@ -178,9 +178,9 @@
 				</div>
 
 				<!-- Footer -->
-				<div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+				<div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700 group-hover:border-gray-200 dark:group-hover:border-gray-600 transition-colors duration-300">
 					<div class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-						<Calendar class="w-4 h-4" />
+						<Calendar class="w-4 h-4 group-hover:text-red-500 transition-colors duration-300" />
 						<span>{formatDate(prompt.createdAt)}</span>
 					</div>
 					
@@ -190,7 +190,7 @@
 								e.stopPropagation();
 								copyPrompt(prompt.prompt);
 							}}
-							class="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+							class="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 group-hover:text-red-500 transition-colors duration-300"
 							title="Copy prompt"
 						>
 							<Copy class="w-4 h-4" />
@@ -201,10 +201,10 @@
 								e.stopPropagation();
 								toggleLike(prompt.id);
 							}}
-							class="flex items-center space-x-1 p-2 rounded-lg transition-colors {
+							class="flex items-center space-x-1 p-2 rounded-lg transition-all duration-300 {
 								$currentUser && prompt.likedBy.includes($currentUser.id)
-									? 'text-red-500 hover:text-red-600'
-									: 'text-gray-400 dark:text-gray-500 hover:text-red-500'
+									? 'text-red-500 hover:text-red-600 hover:scale-110'
+									: 'text-gray-400 dark:text-gray-500 hover:text-red-500 group-hover:text-red-500 hover:scale-110'
 							}"
 							title={$currentUser && prompt.likedBy.includes($currentUser.id) ? 'Unlike' : 'Like'}
 						>
